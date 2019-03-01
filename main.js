@@ -38,6 +38,19 @@ api.on('message', (msg) => {
     }
 });
 
+/* process manger service event handler */
+pms.on('close', (code, signal) => {
+    console.log(api.pid, 'pms- close', code, signal);
+});
+pms.on('disconnect', (code, signal) => {
+    console.log(api.pid, 'pms - disconnect', code, signal);
+});
+pms.on('error', (error) => {
+    console.log(api.pid, 'pms - error', error);
+});
+pms.on('exit', (code, signal) => {
+    console.log(api.pid, 'pms - exit', code, signal);
+});
 pms.on('message', (msg) => {
     console.warn(msg);
-})
+});
