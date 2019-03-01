@@ -40,4 +40,6 @@ Open your browser and go to http://localhost:3000
 
 ## License
 
-Licensed under the MIT, read the full text 
+Copyright (c) 2019 locha.io developers.
+
+Licensed under the MIT, read the full text in the LICENSE file.
