@@ -1,0 +1,14 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    overflow: auto;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+
+header {
+    background-color: #409EFF;
+}
+
+ul.nav {
+    float: right;
+}
