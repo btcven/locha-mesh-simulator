@@ -9,6 +9,10 @@ header {
     background-color: #409EFF;
 }
 
+#map-container { 
+    height: 640px; 
+}
+
 ul.nav {
     float: right;
 }

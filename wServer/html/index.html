@@ -15,35 +15,31 @@
     <meta name="twitter:url" content="https://locha.io">
     <meta name="twitter:title" content="lochaMesh">
     <meta name="twitter:description" content="lochaMesh network radio simulator">
-    <!-- import CSS -->
-    <link rel="stylesheet" href="/css/index.css">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- leaflet maps css -->
+    <link rel="stylesheet" href="/css/leaflet.css">
+    <!-- custom css -->
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 
 <body>
-    <div id="main" class="el-container">
-        <header class="el-header">
-            <el-menu class="el-menu-demo nav">
-                </el-menu-item index="1">
-                    <router-link to="/home">Home</router-link>
-                </el-menu-item>
-                <el-menu-item>
-                    <router-link to="/map"></router-link>
-                </el-menu-item>
-            </el-menu>
-
-        </header>
-
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">lochaMesh</a>
+    </nav>
+    <div id="main" class="container">
+        <div id="map-container"></div>
     </div>
-
-    <script type="text/x-template" id="tpl_home">
-
-    </script>
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- jquery, popper.js and bootstrap.js-->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- leaflet maps js -->
+    <script src="/js/leaflet.js"></script>
+    <!-- socket.io -->
+    <script src="/socket.io/socket.io.js"></script> 
+    <!-- vuejs -->
     <script src="/js/vue.js"></script>
-    <script src="/js/vue-router.js"></script>
-    <script src="/js/el-index.js"></script>
     <script src="/js/vMain.js"></script>
 </body>
 
