@@ -9,10 +9,9 @@ header {
     background-color: #409EFF;
 }
 
-#map-container { 
-    height: 640px; 
-}
+#main {
+    height: 100%;
+    margin: 0;
+  }
 
-ul.nav {
-    float: right;
-}
+

@@ -13,16 +13,41 @@ io.on('connection', (client) => {
     process.send({
         type: 'socket_io',
         event: 'connection',
-        data: { client: client.id }
+        data: {
+            client: client.id
+        }
     });
 
     client.on('disconnect', () => {
         process.send({
             type: 'socket_io',
             event: 'disconnect',
-            data: { client: client.id }
+            data: {
+                client: client.id
+            }
         });
-    })
+    });
+
+    client.on('client_ready', () => {
+        process.send({
+            type: 'socket_io',
+            event: 'client_ready',
+            data: {
+                client: client.id
+            }
+        });
+    });
+
+    client.on('nodes_list', (msg) => {
+        process.send({
+            type: 'socket_io',
+            event: 'nodes_list',
+            data: {
+                cmd: msg.cmd,
+                list: msg.list
+            }
+        });
+    });
 });
 
 io.on('error', (error) => {
