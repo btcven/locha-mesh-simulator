@@ -1,19 +1,30 @@
 var socket = io();
 
-var mymap = L.map('map-container').setView([51.505, -0.09], 13);
+mapboxgl.accessToken = 'pk.eyJ1IjoibHVpc2FuMDAiLCJhIjoiY2pzcWZ0aWFnMDFtNzQzcXEzMTlpc3ducSJ9.-iOStSAXx1QAnsiv8shgRg';
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoibHVpc2FuMDAiLCJhIjoiY2pzcWZ0aWFnMDFtNzQzcXEzMTlpc3ducSJ9.-iOStSAXx1QAnsiv8shgRg'
-}).addTo(mymap);
+var map = new mapboxgl.Map({
+    container: 'map-container', // container id
+    style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+    center: [-74.50, 40], // starting position [lng, lat]
+    zoom: 9 // starting zoom
+});
+
+
 
 const main = new Vue({
     el: "#main",
-    data: {},
-    methods: {},
-    mounted: function(){
+    data: {
+        maps: {
+            container: 'map-container',
+            token: 'pk.eyJ1IjoibHVpc2FuMDAiLCJhIjoiY2pzcWZ0aWFnMDFtNzQzcXEzMTlpc3ducSJ9.-iOStSAXx1QAnsiv8shgRg',
+            position: [40, -40],
+            zoom: 9
+        }
+    },
+    methods: {
+
+    },
+    mounted: function () {
         console.log('app mounted');
     }
 });
