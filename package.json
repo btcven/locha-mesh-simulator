@@ -18,7 +18,7 @@
     "ism",
     "simulator"
   ],
-  "author": "luisan00",
+  "author": "locha.io developers",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
