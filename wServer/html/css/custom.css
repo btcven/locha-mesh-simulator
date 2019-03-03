@@ -1,3 +1,6 @@
+@import url("mapbox-gl.css");
+@import url("mapbox-gl-geocoder.css");
+
 body {
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     overflow: auto;
@@ -5,13 +8,17 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-header {
+nav {
     background-color: #409EFF;
+    box-shadow: 0px 1px 1px rgba(0,0,0,.15);
 }
 
-#main {
-    height: 100%;
-    margin: 0;
-  }
+.mapboxgl-map {
+    position: relative;
+    top: 8px;
+    left: 0;
+    height: 640px;
+    width: 100%;
+   }
 
 

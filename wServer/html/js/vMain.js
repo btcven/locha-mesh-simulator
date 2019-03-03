@@ -1,3 +1,4 @@
+
 var vSocket = {};
 vSocket.install = function (Vue, connection, options) {
 
@@ -51,17 +52,35 @@ vSocket.install = function (Vue, connection, options) {
     });
 };
 
+// vue-socket.io plugin
 Vue.use(vSocket, 'ws://localhost:3000', {
     reconnection: true
 });
 
+
+
+// main app
 var mainApp = new Vue({
     el: "#main",
+    components: { 
+        'vue-mapbox-map': VueMapboxMap 
+    },
     data: {
-        list: []
+        peer_list: [],
+        
+        scene: {
+            accessToken: 'pk.eyJ1IjoibHVpc2FuMDAiLCJhIjoiY2pzcmllcWM1MTZkcTN5bzBzODFnc3p0YSJ9.7oGER0O1NP-vwyLx77mujQ',
+            mapStyle: 'mapbox://styles/mapbox/streets-v11',
+            lng: -66.913262,
+            lat: 10.482252,
+            zoom: 10,
+            pitch: 0,
+            bearing: 0
+        }
+
     },
     methods: {
-        init: function(list){
+        init: function (list) {
             this.$socket.emit('nodes_list', {
                 cmd: 'init',
                 list: this.list
@@ -69,6 +88,18 @@ var mainApp = new Vue({
         },
         socketEmit: function (msg) {
             this.$socket.emit(msg);
+        },
+        setMap: function(map) {
+            this.map = map;
+        },
+        unsetMap: function(map){
+            this.map = null;
+        },
+        saveSetting: function (k, v) {
+            localStorage.setItem(k, v);
+        },
+        readSetting: function (k) {
+            return localStorage.getItem(k);
         }
     },
     socket: {
@@ -86,6 +117,17 @@ var mainApp = new Vue({
                 console.log('vSocket Err:', err);
             }
         }
+    },
+    watch: {
+        peer_list: {
+            handler: function () {
+                console.log('peer_list changed');
+            },
+            deep: true
+        }
+    },
+    created: function () {
+        console.log('app created');
     },
     mounted: function () {
         console.log('app mounted');

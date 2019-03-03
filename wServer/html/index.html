@@ -17,10 +17,18 @@
     <meta name="twitter:description" content="lochaMesh network radio simulator">
     <!-- bootstrap css -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- leaflet maps css -->
-    <link rel="stylesheet" href="css/leaflet.css">
+    <!-- Mapbox css -->
+    <link rel='stylesheet' href='css/mapbox-gl.css' />
+    <link rel='stylesheet' href='css/mapbox-gl-geocoder.css' />
+    <!-- mapbox js -->
+    <script src='js/mapbox-gl.js'></script>
+    <script src='js/mapbox-gl-geocoder.min.js'></script>
+    <!-- vuejs -->
+    <script src="js/vue.js"></script>
+    <!-- vue-mapbox-map -->
+    <script src='js/vue-mapbox-map.umd.js'></script>
     <!-- custom css -->
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/custom.css" />
 
 </head>
 
@@ -29,6 +37,19 @@
         <a class="navbar-brand" href="#">lochaMesh</a>
     </nav>
     <div id="main" class="container">
+        <vue-mapbox-map 
+            :access-token='scene.accessToken' 
+            :map-style="scene.mapStyle" 
+            :interactive='false'
+            :geocoder='false' 
+            :lng='scene.lng' 
+            :lat='scene.lat' 
+            :zoom='scene.zoom' 
+            :pitch='scene.pitch'
+            :bearing='scene.bearing' 
+            @mapbox-ready='setMap' 
+            @mapbox-destroyed='unsetMap'>
+        </vue-mapbox-map>
     </div>
     <!-- jquery, popper.js and bootstrap.js-->
     <script src="js/jquery.min.js"></script>
@@ -36,10 +57,6 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- socket.io -->
     <script src="/socket.io/socket.io.js"></script>
-    <!-- vuejs -->
-    <script src="js/vue.js"></script>
-    <script src="js/leaflet.js"></script>
-    <script src="js/vue2-leaflet.js"></script>
     <script src="js/vMain.js"></script>
 </body>
 
