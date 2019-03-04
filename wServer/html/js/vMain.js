@@ -1,76 +1,28 @@
-
-var vSocket = {};
-vSocket.install = function (Vue, connection, options) {
-
-    let socket;
-
-    if (connection != null && typeof connection === "object")
-        socket = connection;
-    else
-        socket = io(connection || "", options);
-
-    Vue.prototype.$socket = socket;
-
-    let addListeners = function () {
-        if (this.$options["socket"]) {
-            let conf = this.$options.socket;
-            if (conf.namespace) {
-                this.$socket = io(conf.namespace, conf.options);
-            }
-
-            if (conf.events) {
-                let prefix = conf.prefix || "";
-                Object.keys(conf.events).forEach((key) => {
-                    let func = conf.events[key].bind(this);
-                    this.$socket.on(prefix + key, func);
-                    conf.events[key].__binded = func;
-                });
-            }
-        }
-    };
-
-    let removeListeners = function () {
-        if (this.$options["socket"]) {
-            let conf = this.$options.socket;
-
-            if (conf.namespace) {
-                this.$socket.disconnect();
-            }
-
-            if (conf.events) {
-                let prefix = conf.prefix || "";
-                Object.keys(conf.events).forEach((key) => {
-                    this.$socket.off(prefix + key, conf.events[key].__binded);
-                });
-            }
-        }
-    };
-
-    Vue.mixin({
-        [Vue.version.indexOf('2') === 0 ? 'beforeCreate' : 'beforeCompile']: addListeners,
-        beforeDestroy: removeListeners
-    });
-};
-
 // vue-socket.io plugin
 Vue.use(vSocket, 'ws://localhost:3000', {
     reconnection: true
 });
 
 
-
 // main app
 var mainApp = new Vue({
     el: "#main",
-    components: { 
-        'vue-mapbox-map': VueMapboxMap 
+    components: {
+        'vue-mapbox-map': VueMapboxMap
     },
     data: {
         peer_list: [],
-        
+        client_setting: {
+            last_centerPos: [],
+            last_zoom: 10,
+
+        },
+        mapStatus: {
+            loading: false
+        },
         scene: {
             accessToken: 'pk.eyJ1IjoibHVpc2FuMDAiLCJhIjoiY2pzcmllcWM1MTZkcTN5bzBzODFnc3p0YSJ9.7oGER0O1NP-vwyLx77mujQ',
-            mapStyle: 'mapbox://styles/mapbox/streets-v11',
+            mapStyle: 'mapbox://styles/mapbox/satellite-v9',
             lng: -66.913262,
             lat: 10.482252,
             zoom: 10,
@@ -80,21 +32,29 @@ var mainApp = new Vue({
 
     },
     methods: {
-        init: function (list) {
-            this.$socket.emit('nodes_list', {
+        init: function () {
+            this.$socket.emit('peer_list', {
                 cmd: 'init',
-                list: this.list
+                list: this.peer_list
             });
+        },
+        client_status: function (status) {
+            console.log(status);
+            this.$socket.emit('client_app', status);
         },
         socketEmit: function (msg) {
             this.$socket.emit(msg);
         },
-        setMap: function(map) {
+        setMap: function (map) {
             this.map = map;
+            this.map.dragPan._state = "enabled";
+            this.mapStatus.loading = false;
+
         },
-        unsetMap: function(map){
+        unsetMap: function (map) {
             this.map = null;
         },
+        // methods for localStorage.
         saveSetting: function (k, v) {
             localStorage.setItem(k, v);
         },
@@ -120,18 +80,23 @@ var mainApp = new Vue({
     },
     watch: {
         peer_list: {
-            handler: function () {
-                console.log('peer_list changed');
+            handler: function (a, b) {
+                console.log('peer_list: changed');
+            },
+            deep: true
+        },
+        client_setting: {
+            handler: function(){
+                console.log('client_setting: changed');
             },
             deep: true
         }
     },
-    created: function () {
-        console.log('app created');
-    },
     mounted: function () {
-        console.log('app mounted');
-        this.socketEmit('client_ready');
+        // wait until mapbox is fully loaded.
+        // if nodes in localstorage ==> data.peer_list
+        // else [] ==> data.peer_list
+        
         this.init();
     }
 });

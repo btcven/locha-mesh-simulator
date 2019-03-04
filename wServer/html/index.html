@@ -36,20 +36,32 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">lochaMesh</a>
     </nav>
-    <div id="main" class="container">
-        <vue-mapbox-map 
-            :access-token='scene.accessToken' 
-            :map-style="scene.mapStyle" 
-            :interactive='false'
-            :geocoder='false' 
-            :lng='scene.lng' 
-            :lat='scene.lat' 
-            :zoom='scene.zoom' 
-            :pitch='scene.pitch'
-            :bearing='scene.bearing' 
-            @mapbox-ready='setMap' 
-            @mapbox-destroyed='unsetMap'>
-        </vue-mapbox-map>
+    
+    <div id="main" class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                left panel.
+            </div>
+            <div class="col-sm-12 col-md-8">
+                    <vue-mapbox-map 
+                    :access-token='scene.accessToken' 
+                    :map-style="scene.mapStyle" 
+                    :interactive='false'
+                    :geocoder='false' 
+                    :lng='scene.lng' 
+                    :lat='scene.lat' 
+                    :zoom='scene.zoom' 
+                    :pitch='scene.pitch'
+                    :bearing='scene.bearing' 
+                    @mapbox-ready='setMap' 
+                    @mapbox-destroyed='unsetMap'>
+                </vue-mapbox-map>
+            </div>
+            <div class="col-md-2">
+                    right panel.
+                </div>
+        </div>
+
     </div>
     <!-- jquery, popper.js and bootstrap.js-->
     <script src="js/jquery.min.js"></script>
@@ -57,6 +69,9 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- socket.io -->
     <script src="/socket.io/socket.io.js"></script>
+    <!-- socket.io Vuejs plugin -->
+    <script src="js/vSocket.io.js"></script>
+    <!-- Vuejs app -->
     <script src="js/vMain.js"></script>
 </body>
 
