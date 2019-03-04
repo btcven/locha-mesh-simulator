@@ -1,3 +1,9 @@
+/**
+   (c) Copyright 2019 locha.io project developers
+   Licensed under a MIT license, see LICENSE file in the root folder
+   for a full text.
+*/
+
 'use strict';
 const node = require('child_process');
 const api = node.fork(`${__dirname}/wServer/main.js`);
@@ -33,23 +39,27 @@ class peerList {
 
 var ioHandler = function (msg) {
     switch (msg.event) {
-        case 'nodes_list':
+        case 'peer_list':
             // data.cmd : is a command to exec.
             //  for ex: put, update, delete. 
             // data.list: is a JSON containing definitions of each node to create, update or delete.
-            //
-            console.log('nodes: ', msg.data);
+            // pass to class peer_list.
+            console.log('nodes: ', msg);
             break;
+        case 'client_app':
+            console.log('client_app', msg);
         case 'connection':
-            console.log('client connected:', msg.data);
+            console.log('client_connected:', msg.data);
             // next: waiting for commands
             break;
+
         case 'disconnect':
-            console.log('client disconnect:', msg.data);
+            console.log('client_disconnect:', msg.data);
             // next: verify if each subprocess created was stopped.
             break;
         default:
-            break;
+            console.log(msg);
+            //break;
     }
 };
 
@@ -59,6 +69,7 @@ var wsHandler = function (msg) {
             console.log('open: http://localhost:%s', msg.data.port);
             break;
         default:
+        console.log(msg);
             break;
     }
 };
@@ -103,10 +114,9 @@ api.on('message', (msg) => {
 
 
 
+/*
 
-
-
-/* process manger service event handler */
+// process manger service event handler
 pms.on('close', (code, signal) => {
     console.log(api.pid, 'pms- close', code, signal);
 });
@@ -121,4 +131,6 @@ pms.on('exit', (code, signal) => {
 });
 pms.on('message', (msg) => {
     console.warn(msg);
+
 });
+*/
