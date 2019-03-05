@@ -1,3 +1,4 @@
+.vscode
 .DS_*
 node_modules
 *.code-workspace
