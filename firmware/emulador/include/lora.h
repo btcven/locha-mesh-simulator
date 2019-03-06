@@ -35,8 +35,6 @@ extern int convert_msg_into_buffer(std::string msg_received, packet_t Buffer_pac
 extern int procesar_buffer(packet_t Buffer_packet, int neighborEntry, neighbor_entry_t neighborTable[255], int type_of_process);
 
 // las siguientes variables NO se necesitan para arduino
-extern std::string latitud;
-extern std::string longitud;
 extern std::string potencia;
 extern std::string RSSI;
 extern std::string SNR;
@@ -75,10 +73,6 @@ void start_receive_lora_packets()
   mensaje.append(id_nodo);
   mensaje.append("|");
   mensaje.append(get_current_datetime());
-  mensaje.append("|");
-  mensaje.append(latitud);
-  mensaje.append("|");
-  mensaje.append(longitud);
   mensaje.append("|");
   mensaje.append(potencia);
   mensaje.append("|");
