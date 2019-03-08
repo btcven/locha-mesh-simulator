@@ -1,20 +1,22 @@
 
-CC = gcc
+CC = g++
 CFLAGS = -I
-STDFLAGS = c++11
-IDIR = include
-#LINC = ${IDIR}/*.h
-SRCS = routing_NET
+CXXFLAGS  = -Wall $(DEBUG) -std=c++11 -pthread
+LDFLAGS = -pthread
 APP_NAME = esp32-emulator
+
+
+pre: 
+	mkdir build
+	if(&)
 
 # make all
 all: main.cpp
 	@echo "Cleaning up..."
-	rm -rf build
+	rm -rf build/*
 	@echo "Building...\n"
-	mkdir build
-	## gcc -lpthread  -o firmware firmware.c base.c -lssl -lcrypto
-	${CC} -Wall -lpthread -o ${APP_NAME} main.cpp -std=c++11
+	
+	${CC} $(LDFLAGS) -o build/${APP_NAME} main.cpp -std=c++11
 
 clean:
 	@echo "Cleaning up..."

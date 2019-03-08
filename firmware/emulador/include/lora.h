@@ -40,7 +40,7 @@ extern std::string RSSI;
 extern std::string SNR;
 // fin de las variables no necesarias para arduino
 
-// flag to indicate that a lora packet was received   // LORA is half-duplex
+// flag to indicate that a lora packet was received,LORA is half-duplex
 volatile bool lora_receivedFlag = false;
 
 // disable interrupt for lora when it's not needed
@@ -66,21 +66,27 @@ int radio_isused()
 
 void start_receive_lora_packets()
 {
-  // registra en un archivo texto el id del nodo, las coordenadas (lat/long), potencia del nodo (en metros) y la fecha/hora
-  // RSSI y SNR
-  std::string mensaje;
+  // json
+  // potencia del nodo (en metros) y la fecha/hora
+  // dBm, RSSI, SNR
+  std::string linkStatus;
+  linkStatus.append("{");
+  linkStatus.append("type: ");
+  linkStatus.append("data: ");
+  linkStatus.append("{");
+  linkStatus.append("peer_id: " + id_nodo);
+  linkStatus.append(", ");
+  linkStatus.append("time: " + get_current_datetime());
+  linkStatus.append(", ");
+  linkStatus.append("dBm: " + potencia);
+  linkStatus.append(", ");
+  linkStatus.append("RSSI: " + RSSI);
+  linkStatus.append(", ");
+  linkStatus.append("SNR: ");
+  linkStatus.append(SNR);
+  linkStatus.append("}");
 
-  mensaje.append(id_nodo);
-  mensaje.append("|");
-  mensaje.append(get_current_datetime());
-  mensaje.append("|");
-  mensaje.append(potencia);
-  mensaje.append("|");
-  mensaje.append(RSSI);
-  mensaje.append("|");
-  mensaje.append(SNR);
-  mensaje.append("\n");
-  escribe_archivo(listado_nodos, mensaje);
+  // escribe_archivo(listado_nodos, mensaje);
 }
 
 int start_radio()
@@ -137,49 +143,11 @@ std::string converter(uint8_t str)
 
 int trasmit_package_lora(packet_t mensaje)
 {
-  // escribir en el archivo texto el mensaje
-    // preguntar a Roberto <-- fn _itoa_s() -->
-  std::string mensaje2;
 
-  char buffer[4];
-
-  _itoa_s((int)mensaje.max_hops, buffer, 4, 10);
-  std::string str2 = std::string(buffer);
-  char buffer2[4];
-  _itoa_s((int)mensaje.length, buffer2, 4, 10);
-  std::string str3 = std::string(buffer2);
-  char buffer3[4];
-  _itoa_s((int)mensaje.msg_hash, buffer3, 4, 10);
-  std::string str4 = std::string(buffer3);
-  char buffer4[4];
-  _itoa_s((int)mensaje.sequence[1], buffer4, 4, 10);
-  std::string str5 = std::string(buffer4);
-  char buffer5[4];
-  _itoa_s((int)mensaje.sequence[2], buffer5, 4, 10);
-  std::string str6 = std::string(buffer5);
-
-  // mensaje2.append(id_nodo);
-  // mensaje2.append("|");
-  mensaje2.append(str2);
-  mensaje2.append("|");
-  mensaje2.append(str3);
-  mensaje2.append("|");
-  mensaje2.append(mensaje.from);
-  mensaje2.append("|");
-  mensaje2.append(mensaje.to);
-  mensaje2.append("|");
-  mensaje2.append(str5);
-  mensaje2.append("|");
-  mensaje2.append(str6);
-  mensaje2.append("|");
-  mensaje2.append(mensaje.payload);
-  mensaje2.append("|");
-  mensaje2.append(str4);
-
-  mensaje2.append("\n");
-
+  /*
   escribe_archivo(listado_mensajes, mensaje2);
   start_receive_lora_packets();
+  */
   return 0;
 }
 
