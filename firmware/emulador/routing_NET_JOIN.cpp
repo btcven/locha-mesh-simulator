@@ -3,14 +3,15 @@
  * Licensed under a MIT license, see LICENSE file in the root folder
  * for a full text.
  */
-#include "stdafx.h"
+
 #include <stdint.h>
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
 
-#include "routing.h"
+#include "include/stdafx.h"
+#include "include/routing.h"
 
 using namespace std;
 
