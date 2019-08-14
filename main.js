@@ -1,7 +1,6 @@
 /**
-   (c) Copyright 2019 locha.io project developers
-   Licensed under a MIT license, see LICENSE file in the root folder
-   for a full text.
+   (c) Copyright 2019 Locha Mesh developers
+   Licensed under the Apache License 2.0
 */
 
 'use strict';
